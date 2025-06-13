@@ -46,9 +46,21 @@ void comment_stripping(char * file_name){
 }
 
 int main(){
-    char file_name[256];
     printf("ENTER THE COMPLETE NAME OF THE C FILE TO BE PROCESSED(INCLUDING THE .C) : \n");
-    scanf("%s",file_name);
+    char file_name[256];
+    while(1){
+        char file_name[256];
+        scanf("%s",file_name);
+        int file_length= strlen(file_name);
+        if(file_name[file_length-1]=='c'&&file_name[file_length-2]=='.'){
+            printf("PREPROCESSING WILL NOW PROCEED. \n");
+            break;
+        }
+        else{
+            file_name[0]='\0';
+            printf("PLEASE ENTER A VALID FILE NAME. \n");
+        }
+    }
     comment_stripping(file_name);
     return 0;
 }
