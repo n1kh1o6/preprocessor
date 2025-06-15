@@ -110,8 +110,20 @@ void comment_stripping(char * file_name){
         char line[1024];
         printf("FILE SUCCESSFULLY OPENED FOR STRIPPING SINGLE_LINE COMMENTS. \n");
         while(fgets(line,1024,file_handle)!=NULL){
+            int flag =0;
+            int start_location=-1,end_location=-1;
             for(int i=0;*(line+i)!='\0';i++){
-                if(*(line+i)==(char)47){
+                if(*(line+i)==(char)34){
+                    start_location=i;
+                    for(int j=i+1;*(line+j)!='\0';j++){
+                        if(*(line+j)==(char)34)
+                        end_location=j;
+                    }
+                    break;
+                }
+            }
+            for(int i=0;*(line+i)!='\0';i++){
+                if(((*(line+i)==(char)47)&&(*(line+i+1)==(char)47))&&!(i>start_location&&i<end_location)){
                     line[i]='\n';
                     line[i+1]='\0';
                     break;
@@ -144,7 +156,7 @@ int main(){
             printf("PLEASE ENTER A VALID FILE NAME. \n");
         }
     }
-    file_inclusion(file_name);
+    //file_inclusion(file_name);
     comment_stripping(file_name);
     return 0;
 }
